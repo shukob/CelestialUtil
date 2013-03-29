@@ -1,7 +1,7 @@
 
 #import "CMSun.h"
 #import "CMLocationUtility.h"
-#import "CMGeoscienceUtility.h"
+#import "CMCelestialUtility.h"
 #import "define.h"
 
 @implementation CMSun

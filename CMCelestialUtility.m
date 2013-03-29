@@ -1,7 +1,7 @@
-#import "CMGeoscienceUtility.h"
+#import "CMCelestialUtility.h"
 #import "NSDate+Additions.h"
 #import "define.h"
-@implementation CMGeoscienceUtility
+@implementation CMCelestialUtility
 
 
 +(double)fractionalYearAtDate:(NSDate*)date{
@@ -130,7 +130,7 @@ static double E(double T){
     NSDateFormatter *fmt = [[[NSDateFormatter alloc]init]autorelease];
     fmt.dateFormat = @"y/M/d H:m:s Z";
     NSDate *targetDate = [fmt dateFromString:@"2000/8/20 0:0:0 -0900"];
-    double sidereal = [CMGeoscienceUtility siderealTimeOfDate:targetDate inLocation:CLLocationCoordinate2DMake(64.8167, -147.8667) ofTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:-60*60*9]];
+    double sidereal = [CMCelestialUtility siderealTimeOfDate:targetDate inLocation:CLLocationCoordinate2DMake(64.8167, -147.8667) ofTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:-60*60*9]];
     long temp = sidereal/360;
     sidereal -= temp*360;
     NSLog(@"%lf", sidereal);

@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface CMGeoscienceUtility : NSObject
+@interface CMCelestialUtility : NSObject
 +(double)fractionalYearAtDate:(NSDate*)date;
 +(double)azimuthAngleAtCoordinate:(CLLocationCoordinate2D)coordinate atDate:(NSDate*)date;
 +(double)equationOfTimeAtDate:(NSDate*)date;

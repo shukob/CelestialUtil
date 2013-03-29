@@ -1,7 +1,7 @@
 
 #import "CMPlanet.h"
 #import "define.h"
-#import "CMGeoscienceUtility.h"
+#import "CMCelestialUtility.h"
 @interface CMPlanet(){
 
 }
@@ -139,7 +139,7 @@ static double E(double T){
 }
 
 -(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate TimeZone:(NSTimeZone*)zone{
-    double t = [CMGeoscienceUtility pastJulianYearOfDate:date inLocation:coordinate ofTimeZone:zone];
+    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate ofTimeZone:zone];
     double l = [self lambda:t];
     double b = [self beta:t];
     double e = [self E:t];
@@ -149,14 +149,14 @@ static double E(double T){
 }
 
 -(double)azimuthAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate TimeZone:(NSTimeZone* )zone{
-    double t = [CMGeoscienceUtility pastJulianYearOfDate:date inLocation:coordinate ofTimeZone:zone];//T(date);
+    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate ofTimeZone:zone];//T(date);
     double l = [self lambda:t];
     double e = [self E:t];
     double b = [self beta:t];
     double al, del;
     [self setDelta:&del andAlpha:&al usingLambda:l andBeta:b andEpsilon:e];
 
-    double t_ = [CMGeoscienceUtility siderealTimeOfDate:date inLocation:coordinate ofTimeZone:zone]-al;
+    double t_ = [CMCelestialUtility siderealTimeOfDate:date inLocation:coordinate ofTimeZone:zone]-al;
     double a = [self azimuth:del phi:coordinate.latitude t:t_];
     return D2R(a);
 }
