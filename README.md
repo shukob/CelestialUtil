@@ -12,9 +12,22 @@ Usage
 --------------
 
 You can get azimuth angle at specific date and location using:
-	-(double)azimuthAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinte TimeZone:(NSTimeZone*)zone;
+
+
+    -(double)azimuthAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinte TimeZone:(NSTimeZone*)zone;
+
+e.g.
+
+    [[[CMMoon instance] azimuthAngleAtDate:[NSDate date] inLocation:location TimeZone:[NSTimeZone defaultTimeZone]]
 
 You can get declination as well:
-	-(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinte TimeZone:(NSTimeZone*)zone;
+
+
+    -(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinte TimeZone:(NSTimeZone*)zone;
+
+
+e.g.
+
+    [[[CMSun instance] declinationAtDate:[NSDate date] inLocation:location TimeZone:[NSTimeZone defaultTimeZone]]
 
 Licensed under the MIT license.
