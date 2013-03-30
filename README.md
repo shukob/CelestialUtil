@@ -7,4 +7,14 @@ The approximation formulas are taken from:
 *ISBN=4805206349*
 *日の出・日の入りの計算 : 天体の出没時刻の求め方 / 長沢工著, 東京 : 地人書館, 1999.12*
 
+
+Usage
+--------------
+
+You can get azimuth angle at specific date and location using:
+	-(double)azimuthAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinte TimeZone:(NSTimeZone*)zone;
+
+You can get declination as well:
+	-(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinte TimeZone:(NSTimeZone*)zone;
+
 Licensed under the MIT license.
