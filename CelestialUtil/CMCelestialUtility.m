@@ -94,8 +94,8 @@ static double deltaT(double T){
     NSDateComponents *components = [cal components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
     //The calculation formula is that if time is (2000 + y) / m / d h:m:s +0900
     //then K'(Julian year from 2000/1/1) is 365y + 30m + d - 33.875 + [3(m + 1)/5] + [y/4] where [] is Gauss function.
-    //for m = 1, 2, we need y-=1 and m+=12 i.e. m=1 -> m=13, m=2 -> m=14 in previous year.
-    //Be careful that it uses JST for time presentation.
+    //For m = 1, 2, we need y-=1 and m+=12 i.e. m=1 -> m=13, m=2 -> m=14 in previous year.
+    //Be careful that it uses JST for time representation.
     
     
     //Calculate using JST(+0900)
