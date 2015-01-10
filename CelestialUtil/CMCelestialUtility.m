@@ -92,24 +92,27 @@ static double deltaT(double T){
     NSCalendar *cal = [[[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar]autorelease];
     [cal setTimeZone:timeZone];
     NSDateComponents *components = [cal components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
-    [components setTimeZone:timeZone];
-    //    NSLog(@"%@", timeZone);
-    //    NSLog(@"%@", components);
+    //The calculation formula is that if time is (2000 + y) / m / d h:m:s +0900
+    //then K'(Julian year from 2000/1/1) is 365y + 30m + d - 33.875 + [3(m + 1)/5] + [y/4] where [] is Gauss function.
+    //for m = 1, 2, we need y-=1 and m+=12 i.e. m=1 -> m=13, m=2 -> m=14 in previous year.
+    //Be careful that it uses JST for time presentation.
+    
+    
+    //Calculate using JST(+0900)
+    [components setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:9 * 60 * 60]];
     double y = components.year - 2000;
     double m = components.month;
     double d = components.day;
     double I = [timeZone secondsFromGMT]/60/60;
+    if (m<=2) {
+        m+=12;
+        y-=1;
+    }
     double k_ = 365.0*y + 30 * m + d - 33.5 - I / 24.0 + floor(3.0 * (m + 1) / 5.0) + floor(y/4.0);
-    //    NSLog(@"K':%lf", k_);
     double g = components.hour;
-    //    NSLog(@"%@", date);
-    //    NSLog(@"y:%lf m:%lf d:%lf I:%lf G :%lf", y, m, d, I ,g);
-//    double t_u = (k_ + g/24.0)/36525.;
-//    double dt = deltaT(t_u)*36525.;
-//    double t_ = (k_ + g/24.0 + dt)/365.25; 
-    double t =(k_ + g/24.0 + [self deltaTForYear:components.year]/86400)/365.25; 
+    
+    double t =(k_ + g/24.0 + [self deltaTForYear:components.year]/86400)/365.25;
     return t;
-//    return t_;
 }
 
 
