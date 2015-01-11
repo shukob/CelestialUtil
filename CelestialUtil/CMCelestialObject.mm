@@ -206,13 +206,13 @@ static double E(double T){
 }
 
 //elevation must be in degree
--(double)atomosphicReflactionForElevation:(double)elevation{
+-(double)atmosphicReflactionForElevation:(double)elevation{
     return D2R(0.0167 / TAN(elevation + 8.6 / (elevation + 4.4)));
 }
 
 -(double)apparentElevationAtDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate{
     double elevation = [self elevationAtDate:date inLocation:coordinate];
-    return elevation + [self atomosphicReflactionForElevation:elevation] + [self equatorialHorizontalParallaxAtDate:date inLocation:coordinate];
+    return elevation + [self atmosphicReflactionForElevation:elevation] + [self equatorialHorizontalParallaxAtDate:date inLocation:coordinate];
 }
 
 -(double)equatorialHorizontalParallaxAtDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate{
