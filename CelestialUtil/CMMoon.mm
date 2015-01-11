@@ -507,6 +507,12 @@ static double PI(double T){
     return beta(T);
 }
 
+-(double)equatorialHorizontalParallax:(double)T{
+    return D2R(PI(T));
+}
+
+
+
 @end
 
 

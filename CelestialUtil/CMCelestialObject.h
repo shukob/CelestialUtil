@@ -14,13 +14,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     
     
 }
--(double)azimuthAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinte TimeZone:(NSTimeZone*)zone;
+-(double)azimuthAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
 
--(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinte TimeZone:(NSTimeZone*)zone;
+-(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
+
+-(double)elevationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
+
+-(double)hourAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
+
+-(double)equatorialHorizontalParallaxAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate;
 
 -(double) normalizeRadian:(double) angle;
 
 -(double) moveToSameQuadrant:(double)target reference:(double) reference;
+
+-(double)apparentElevationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
+
+-(double)astoronoimcalUnitFromEarthAtDate:(NSDate*)date;
 
 //This method assumes angles to be in 0 <= angle < 360
 //This method returns angles in degrees
@@ -41,6 +51,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -(double)beta:(double)T;
 
 -(void)setDelta:(double*)delta andAlpha:(double*)alpha usingLambda:(double)lambda andBeta:(double)beta andEpsilon:(double)epsilon;
+
+-(double)equatorialHorizontalParallax:(double)T;
+-(double)astoronoimcalUnitFromEarth:(double)T;
 
 @end
 

@@ -89,6 +89,12 @@ static double azimuth(double del, double phi, double t){
     }
     return R2D(A_);
 }
+
+static double elevation(double del, double phi, double t){
+    return R2D(asin(SIN(del)*SIN(phi) + COS(del) * COS(phi) * COS(t)));
+}
+
+//angles are in degree
 static void setDeltaAndAlpha(double lam, double bet, double e, double&delta, double&alpha){
     double U = COS(bet)*COS(lam);
     double V = -SIN(bet)*SIN(e) + COS(bet)*SIN(lam)*COS(e);
@@ -138,6 +144,10 @@ static double E(double T){
     return azimuth(del, phi, t);
 }
 
+-(double) elevation:(double)del phi:(double)phi t:(double)t{
+    return elevation(del, phi, t);
+}
+
 -(double) E:(double) T{
     return E(T);
 }
@@ -146,8 +156,8 @@ static double E(double T){
     return 0;
 }
 
--(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate TimeZone:(NSTimeZone*)zone{
-    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate ofTimeZone:zone];
+-(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate{
+    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate];
     double l = [self lambda:t];
     double b = [self beta:t];
     double e = [self E:t];
@@ -156,15 +166,14 @@ static double E(double T){
     return D2R(delta);
 }
 
--(double)azimuthAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate TimeZone:(NSTimeZone* )zone{
-    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate ofTimeZone:zone];//T(date);
+-(double)azimuthAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate{
+    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate];//T(date);
     double l = [self lambda:t];
     double e = [self E:t];
     double b = [self beta:t];
     double al, del;
     [self setDelta:&del andAlpha:&al usingLambda:l andBeta:b andEpsilon:e];
-
-    double t_ = [CMCelestialUtility siderealTimeOfDate:date inLocation:coordinate ofTimeZone:zone]-al;
+    double t_ = [CMCelestialUtility siderealTimeOfDate:date inLocation:coordinate]-al;
     double a = [self azimuth:del phi:coordinate.latitude t:t_];
     return D2R(a);
 }
@@ -172,5 +181,49 @@ static double E(double T){
 -(double)lambda:(double)T{
     return 0;
 }
+
+-(double)elevationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate{
+    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate];//T(date);
+    double l = [self lambda:t];
+    double e = [self E:t];
+    double b = [self beta:t];
+    double al, del;
+    [self setDelta:&del andAlpha:&al usingLambda:l andBeta:b andEpsilon:e];
+    double t_ = [CMCelestialUtility siderealTimeOfDate:date inLocation:coordinate]-al;
+    double a = [self elevation:del phi:coordinate.latitude t:t_];
+    return D2R(a);
+}
+
+-(double)hourAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate{
+    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate];//T(date);
+    double l = [self lambda:t];
+    double e = [self E:t];
+    double b = [self beta:t];
+    double al, del;
+    [self setDelta:&del andAlpha:&al usingLambda:l andBeta:b andEpsilon:e];
+    double t_ = [CMCelestialUtility siderealTimeOfDate:date inLocation:coordinate]-al;
+    return D2R(t_);
+}
+
+//elevation must be in degree
+-(double)atomosphicReflactionForElevation:(double)elevation{
+    return D2R(0.0167 / TAN(elevation + 8.6 / (elevation + 4.4)));
+}
+
+-(double)apparentElevationAtDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate{
+    double elevation = [self elevationAtDate:date inLocation:coordinate];
+    return elevation + [self atomosphicReflactionForElevation:elevation] + [self equatorialHorizontalParallaxAtDate:date inLocation:coordinate];
+}
+
+-(double)equatorialHorizontalParallaxAtDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate{
+    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate];//T(date);
+    return [self equatorialHorizontalParallax:t];
+}
+
+-(double)equatorialHorizontalParallax:(double)T{
+    double au = [self astoronoimcalUnitFromEarth:T];
+    return D2R(0.0024428 / au);
+}
+
 
 @end

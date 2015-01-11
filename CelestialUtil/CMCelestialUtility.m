@@ -88,31 +88,31 @@ static double deltaT(double T){
     return 51 + (year-1981) * 0.6;
 }
 
-+(double)pastJulianYearOfDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate ofTimeZone:(NSTimeZone *)timeZone{
++(double)pastJulianYearOfDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate{
     NSCalendar *cal = [[[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar]autorelease];
-    [cal setTimeZone:timeZone];
+    [cal setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     NSDateComponents *components = [cal components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
-    //The calculation formula is that if time is (2000 + y) / m / d h:m:s +0900
-    //then K'(Julian year from 2000/1/1) is 365y + 30m + d - 33.875 + [3(m + 1)/5] + [y/4] where [] is Gauss function.
-    //For m = 1, 2, we need y-=1 and m+=12 i.e. m=1 -> m=13, m=2 -> m=14 in previous year.
-    //Be careful that it uses JST for time representation.
-    
-    
-    //Calculate using JST(+0900)
-    [components setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:9 * 60 * 60]];
+    [components setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    //    NSLog(@"%@", timeZone);
+    //    NSLog(@"%@", components);
     double y = components.year - 2000;
     double m = components.month;
     double d = components.day;
-    double I = [timeZone secondsFromGMT]/60/60;
     if (m<=2) {
         m+=12;
         y-=1;
     }
-    double k_ = 365.0*y + 30 * m + d - 33.5 - I / 24.0 + floor(3.0 * (m + 1) / 5.0) + floor(y/4.0);
+    double k_ = 365.0*y + 30 * m + d - 33.5 + floor(3.0 * (m + 1) / 5.0) + floor(y/4.0);
+    //    NSLog(@"K':%lf", k_);
     double g = components.hour;
-    
-    double t =(k_ + g/24.0 + [self deltaTForYear:components.year]/86400)/365.25;
+    //    NSLog(@"%@", date);
+    //    NSLog(@"y:%lf m:%lf d:%lf I:%lf G :%lf", y, m, d, I ,g);
+//    double t_u = (k_ + g/24.0)/36525.;
+//    double dt = deltaT(t_u)*36525.;
+//    double t_ = (k_ + g/24.0 + dt)/365.25; 
+    double t =(k_ + g/24.0 + [self deltaTForYear:components.year]/86400)/365.25; 
     return t;
+//    return t_;
 }
 
 
@@ -120,17 +120,15 @@ static double theta0(double T, double I, double lambda){
     return  100.4606  + 360.007700536 * T + 0.00000003879 * T * T - 15. * I + lambda;
 }
 
-+(double)siderealTimeOfDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate ofTimeZone:(NSTimeZone *)timeZone{
-    NSDate *beginingOfDay = [date beginningOfDateInTimeZone:timeZone];
-    double t0 = [self pastJulianYearOfDate:beginingOfDay inLocation:coordinate ofTimeZone:timeZone];
++(double)siderealTimeOfDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate{
     
-    double I = [timeZone secondsFromGMT]/60/60;
-    double theta0_ = theta0(t0, I, coordinate.longitude);
-    double theta = theta0_ ;
-    
-    NSTimeInterval timeIntervalSinceBeginningOfDay = [date timeIntervalSinceDate:beginingOfDay];
-    theta += 360.9856474 * timeIntervalSinceBeginningOfDay/60./60./24.;
-    return theta;
+    NSCalendar *cal = [[[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar]autorelease];
+    [cal setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    NSDateComponents *components = [cal components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
+    [components setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    double T = [self pastJulianYearOfDate:date inLocation:coordinate];
+    double d = components.hour / 24.0;
+    return 100.4606 + 360.007700536 * T + 0.00000003879 * T * T + 360. * d + coordinate.longitude;
 }
 
 static double E(double T){
@@ -142,14 +140,16 @@ static double E(double T){
     NSDateFormatter *fmt = [[[NSDateFormatter alloc]init]autorelease];
     fmt.dateFormat = @"y/M/d H:m:s Z";
     NSDate *targetDate = [fmt dateFromString:@"2000/8/20 0:0:0 -0900"];
-    double sidereal = [CMCelestialUtility siderealTimeOfDate:targetDate inLocation:CLLocationCoordinate2DMake(64.8167, -147.8667) ofTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:-60*60*9]];
+    double sidereal = [CMCelestialUtility siderealTimeOfDate:targetDate inLocation:CLLocationCoordinate2DMake(64.8167, -147.8667)];
     long temp = sidereal/360;
     sidereal -= temp*360;
     NSLog(@"%lf", sidereal);
     NSLog(@"theta0: %lf", theta0(0.63484121, -9, -147.8667));
 }
 
-
++(double)inclinationOfHorizonAtVerticalHeight:(double)heightInMeter{
+    return 2.12/60.0 * sqrt(heightInMeter);
+}
 @end
 
 

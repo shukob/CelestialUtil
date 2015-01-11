@@ -149,6 +149,10 @@ static double beta(double T){
     return beta(T);
 }
 
+-(double)astoronoimcalUnitFromEarth:(double)T{
+    return 1;
+}
+
 
 @end
 
