@@ -16,7 +16,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 +(double)fractionalYearAtDate:(NSDate*)date{
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
     NSInteger year = [components year];
-    NSDateFormatter *fmt = [[[NSDateFormatter alloc]init] autorelease];
+    NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
     fmt.dateFormat = @"y/M/d H:m:s";
     NSDate *firstDayOfTheYear = [fmt dateFromString:[NSString stringWithFormat:@"%d/1/1 0:0:0", year]];
     NSLog(@"first day of the year:%@", firstDayOfTheYear);
@@ -41,7 +41,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     NSInteger year = [components year];
     NSInteger month = [components month];
     NSInteger day = [components day];
-    NSDateFormatter *fmt = [[[NSDateFormatter alloc]init] autorelease];
+    NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
     fmt.dateFormat = @"y/M/d H:m:s";
     NSDate *beginningOfTheDay = [fmt dateFromString:[NSString stringWithFormat:@"%d/%d/%d 0:0:0", year, month, day]];
     NSTimeInterval intervalInSeconds = [date timeIntervalSinceDate:beginningOfTheDay];
@@ -69,7 +69,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 +(double)equationOfTimeAtDate:(NSDate *)date{
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
-    NSDateFormatter *fmt = [[[NSDateFormatter alloc]init]autorelease];
+    NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
     fmt.dateFormat = @"y/M/d H:m:s";
     NSInteger y = [components year];
     NSDate *firstDayOfYear = [fmt dateFromString:[NSString stringWithFormat:@"%d/1/1 0:0:0", y]];
@@ -89,7 +89,7 @@ static double deltaT(double T){
 }
 
 +(double)pastJulianYearOfDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate{
-    NSCalendar *cal = [[[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar]autorelease];
+    NSCalendar *cal = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
     [cal setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     NSDateComponents *components = [cal components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
     [components setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
@@ -122,7 +122,7 @@ static double theta0(double T, double I, double lambda){
 
 +(double)siderealTimeOfDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate{
     
-    NSCalendar *cal = [[[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar]autorelease];
+    NSCalendar *cal = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
     [cal setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     NSDateComponents *components = [cal components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
     [components setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
@@ -137,7 +137,7 @@ static double E(double T){
 
 
 +(void)test{
-    NSDateFormatter *fmt = [[[NSDateFormatter alloc]init]autorelease];
+    NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
     fmt.dateFormat = @"y/M/d H:m:s Z";
     NSDate *targetDate = [fmt dateFromString:@"2000/8/20 0:0:0 -0900"];
     double sidereal = [CMCelestialUtility siderealTimeOfDate:targetDate inLocation:CLLocationCoordinate2DMake(64.8167, -147.8667)];
