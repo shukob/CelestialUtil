@@ -10,6 +10,7 @@ The approximation formulas are taken from:
 
 ## Usage
 
+All dates must be expressed in Japan Standard Time which is UTC +9:00.
 ### Azimuth
 
 You can get azimuth angle at specific date and location using:
@@ -43,7 +44,6 @@ e.g.
     [[[CMSun new] elevationAtDate:date inLocation:location]
 
 
-All dates must be expressed in Japan Standard Time which is UTC +9:00.
 
 ## ARC
 CelestialUtil needs ARC.
