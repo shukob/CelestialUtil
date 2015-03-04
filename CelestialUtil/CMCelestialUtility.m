@@ -104,7 +104,7 @@ static double deltaT(double T){
     }
     double k_ = 365.0*y + 30 * m + d - 33.5 + floor(3.0 * (m + 1) / 5.0) + floor(y/4.0);
     //    NSLog(@"K':%lf", k_);
-    double g = components.hour;
+    double g = components.hour + ((double)components.minute / 60.) + (components.second / 3600.);
     //    NSLog(@"%@", date);
     //    NSLog(@"y:%lf m:%lf d:%lf I:%lf G :%lf", y, m, d, I ,g);
 //    double t_u = (k_ + g/24.0)/36525.;
@@ -127,7 +127,7 @@ static double theta0(double T, double I, double lambda){
     NSDateComponents *components = [cal components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
     [components setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     double T = [self pastJulianYearOfDate:date inLocation:coordinate];
-    double d = components.hour / 24.0;
+    double d = (components.hour + (double)components.minute / 60. + components.second / 3600.) / 24.0;
     return 100.4606 + 360.007700536 * T + 0.00000003879 * T * T + 360. * d + coordinate.longitude;
 }
 
