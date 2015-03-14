@@ -88,7 +88,7 @@ static double deltaT(double T){
     return 51 + (year-1981) * 0.6;
 }
 
-+(double)pastJulianYearOfDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate{
++(double)pastJulianYearOfDate:(NSDate *)date{
     NSCalendar *cal = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
     [cal setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     NSDateComponents *components = [cal components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
@@ -126,7 +126,7 @@ static double theta0(double T, double I, double lambda){
     [cal setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     NSDateComponents *components = [cal components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
     [components setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    double T = [self pastJulianYearOfDate:date inLocation:coordinate];
+    double T = [self pastJulianYearOfDate:date];
     double d = (components.hour + (double)components.minute / 60. + components.second / 3600.) / 24.0;
     return 100.4606 + 360.007700536 * T + 0.00000003879 * T * T + 360. * d + coordinate.longitude;
 }

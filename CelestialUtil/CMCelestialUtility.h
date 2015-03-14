@@ -14,7 +14,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 +(double)fractionalYearAtDate:(NSDate*)date;
 +(double)azimuthAngleAtCoordinate:(CLLocationCoordinate2D)coordinate atDate:(NSDate*)date;
 +(double)equationOfTimeAtDate:(NSDate*)date;
-+(double)pastJulianYearOfDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
++(double)pastJulianYearOfDate:(NSDate*)date;
 +(double)siderealTimeOfDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
 +(double)inclinationOfHorizonAtVerticalHeight:(double)heightInMeter;
 +(void)test;

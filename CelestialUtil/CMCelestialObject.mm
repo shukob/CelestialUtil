@@ -156,8 +156,8 @@ static double E(double T){
     return 0;
 }
 
--(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate{
-    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate];
+-(double)declinationAtDate:(NSDate*)date{
+    double t = [CMCelestialUtility pastJulianYearOfDate:date];
     double l = [self lambda:t];
     double b = [self beta:t];
     double e = [self E:t];
@@ -167,7 +167,7 @@ static double E(double T){
 }
 
 -(double)azimuthAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate{
-    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate];//T(date);
+    double t = [CMCelestialUtility pastJulianYearOfDate:date];//T(date);
     double l = [self lambda:t];
     double e = [self E:t];
     double b = [self beta:t];
@@ -183,7 +183,7 @@ static double E(double T){
 }
 
 -(double)elevationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate{
-    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate];//T(date);
+    double t = [CMCelestialUtility pastJulianYearOfDate:date];//T(date);
     double l = [self lambda:t];
     double e = [self E:t];
     double b = [self beta:t];
@@ -195,7 +195,7 @@ static double E(double T){
 }
 
 -(double)hourAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate{
-    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate];//T(date);
+    double t = [CMCelestialUtility pastJulianYearOfDate:date];//T(date);
     double l = [self lambda:t];
     double e = [self E:t];
     double b = [self beta:t];
@@ -215,8 +215,8 @@ static double E(double T){
     return elevation + [self atmosphicReflactionForElevation:elevation] - [self equatorialHorizontalParallaxAtDate:date inLocation:coordinate];
 }
 
--(double)equatorialHorizontalParallaxAtDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate{
-    double t = [CMCelestialUtility pastJulianYearOfDate:date inLocation:coordinate];//T(date);
+-(double)equatorialHorizontalParallaxAtDate:(NSDate *)date{
+    double t = [CMCelestialUtility pastJulianYearOfDate:date];//T(date);
     return [self equatorialHorizontalParallax:t];
 }
 
