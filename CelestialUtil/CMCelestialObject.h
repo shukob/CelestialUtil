@@ -14,46 +14,64 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     
     
 }
--(double)azimuthAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
 
--(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
-
--(double)elevationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
-
--(double)hourAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
-
--(double)equatorialHorizontalParallaxAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate;
-
+//returns in 0 <= theta < 2π for any radian value
 -(double) normalizeRadian:(double) angle;
+
 
 -(double) moveToSameQuadrant:(double)target reference:(double) reference;
 
+//Returns in radian
+-(double)azimuthAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
+
+//Returns in radian
+-(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
+
+//Returns in radian
+-(double)elevationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
+
+//Returns in radian
+-(double)hourAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
+
+//Returns in radian
+-(double)equatorialHorizontalParallaxAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate;
+
+//Returns in radian
+-(double)equatorialHorizontalParallax:(double)T;
+
+//Returns in radian
 -(double)apparentElevationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
 
--(double)astoronoimcalUnitFromEarthAtDate:(NSDate*)date;
+//Returns in AU
+-(double)geocentricDistanceAtDate:(NSDate*)date;
+
+//Returns in AU
+-(double)geocentricDistance:(double)T;
 
 //This method assumes angles to be in 0 <= angle < 360
 //This method returns angles in degrees
 -(double) alpha:(double)lam e:(double)e;
 
-
 //This method assumes angles to be in 0 <= angle < 360
 //This method returns angles in degrees
 -(double) delta:(double)lam e:(double)e;
 
-
+//Returns in degree 
 -(double) azimuth:(double)del phi:(double) phi t:( double) t;
 
+//Returns in degree
 -(double) E:(double) T;
 
+//Returns in degree
 -(double)lambda:(double)T;
 
+//Returns in degree 
 -(double)beta:(double)T;
 
+//Sets in degree
 -(void)setDelta:(double*)delta andAlpha:(double*)alpha usingLambda:(double)lambda andBeta:(double)beta andEpsilon:(double)epsilon;
 
--(double)equatorialHorizontalParallax:(double)T;
--(double)astoronoimcalUnitFromEarth:(double)T;
+
 
 @end
 

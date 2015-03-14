@@ -220,11 +220,11 @@ static double E(double T){
     return [self equatorialHorizontalParallax:t];
 }
 
--(double)astoronoimcalUnitFromEarthAtDate:(NSDate *)date{
+-(double)geocentricDistanceAtDate:(NSDate *)date{
     double t = [CMCelestialUtility pastJulianYearOfDate:date];//T(date);
-    return [self astoronoimcalUnitFromEarth:t];
+    return [self geocentricDistance:t];
 }
--(double)astoronoimcalUnitFromEarth:(double)T{
+-(double)geocentricDistance:(double)T{
     return D2R(0.0024428)/[self equatorialHorizontalParallax:T];
 }
 

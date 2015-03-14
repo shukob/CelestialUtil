@@ -149,12 +149,12 @@ static double beta(double T){
     return beta(T);
 }
 
--(double)astoronoimcalUnitFromEarth:(double)T{
+-(double)geocentricDistance:(double)T{
     return r(T);
 }
 
 -(double)equatorialHorizontalParallax:(double)T{
-    double au = [self astoronoimcalUnitFromEarth:T];
+    double au = [self geocentricDistance:T];
     return D2R(0.0024428 / au);
 }
 
