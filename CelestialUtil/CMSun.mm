@@ -150,9 +150,13 @@ static double beta(double T){
 }
 
 -(double)astoronoimcalUnitFromEarth:(double)T{
-    return 1;
+    return r(T);
 }
 
+-(double)equatorialHorizontalParallax:(double)T{
+    double au = [self astoronoimcalUnitFromEarth:T];
+    return D2R(0.0024428 / au);
+}
 
 @end
 
