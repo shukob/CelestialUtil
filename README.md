@@ -21,9 +21,12 @@ e.g.
 
     [[[CMMoon new] azimuthAngleAtDate:date inLocation:location]
 
-You can get declination angle at specific date and location using:
+
 
 ### Declination
+You can get declination angle at specific date and location using:
+
+
     -(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)location;
 
 
