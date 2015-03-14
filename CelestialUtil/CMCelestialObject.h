@@ -25,7 +25,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -(double)azimuthAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
 
 //Returns in radian
--(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
+-(double)declinationAtDate:(NSDate*)date;
 
 //Returns in radian
 -(double)elevationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
