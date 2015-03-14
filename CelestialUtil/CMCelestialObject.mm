@@ -225,7 +225,7 @@ static double E(double T){
     return [self astoronoimcalUnitFromEarth:t];
 }
 -(double)astoronoimcalUnitFromEarth:(double)T{
-    return 0.0024428/[self equatorialHorizontalParallax:T];
+    return D2R(0.0024428)/[self equatorialHorizontalParallax:T];
 }
 
 @end
