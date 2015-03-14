@@ -220,10 +220,12 @@ static double E(double T){
     return [self equatorialHorizontalParallax:t];
 }
 
--(double)equatorialHorizontalParallax:(double)T{
-    double au = [self astoronoimcalUnitFromEarth:T];
-    return D2R(0.0024428 / au);
+-(double)astoronoimcalUnitFromEarthAtDate:(NSDate *)date{
+    double t = [CMCelestialUtility pastJulianYearOfDate:date];//T(date);
+    return [self astoronoimcalUnitFromEarth:t];
 }
-
+-(double)astoronoimcalUnitFromEarth:(double)T{
+    return 0.0024428/[self equatorialHorizontalParallax:T];
+}
 
 @end
