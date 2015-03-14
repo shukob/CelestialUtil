@@ -24,15 +24,15 @@ e.g.
 
 
 ### Declination
-You can get declination angle at specific date and location using:
+You can get declination angle at specific date using:
 
 
-    -(double)declinationAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)location;
+    -(double)declinationAtDate:(NSDate*)date;
 
 
 e.g.
 
-    [[[CMSun new] declinationAtDate:date inLocation:location]
+    [[[CMSun new] declinationAtDate:date]
 
 ### Elevation
 You can get elevation (i.e. altitude) angle at specific date and location using:
