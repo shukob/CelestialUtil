@@ -46,6 +46,16 @@ e.g.
     [[[CMSun new] elevationAtDate:date inLocation:location]
 
 
+### Geocentric Distance
+You can get geocentric distance at specific date using:
+
+
+    -(double)geocentricDistanceAtDate:(NSDate*)date;
+
+
+e.g.
+
+    [[[CMSun new] geocentricDistanceAtDate:date]
 
 ## ARC
 CelestialUtil needs ARC.
