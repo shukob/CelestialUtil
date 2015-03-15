@@ -19,7 +19,7 @@ You can get azimuth angle at specific date and location using:
 
 e.g.
 
-    [[[CMMoon new] azimuthAngleAtDate:date inLocation:location]
+    [[CMMoon new] azimuthAngleAtDate:date inLocation:location]
 
 
 
@@ -32,7 +32,7 @@ You can get declination angle at specific date using:
 
 e.g.
 
-    [[[CMSun new] declinationAtDate:date]
+    [[CMSun new] declinationAtDate:date]
 
 ### Elevation
 You can get elevation (i.e. altitude) angle at specific date and location using:
@@ -43,7 +43,7 @@ You can get elevation (i.e. altitude) angle at specific date and location using:
 
 e.g.
 
-    [[[CMSun new] elevationAtDate:date inLocation:location]
+    [[CMSun new] elevationAtDate:date inLocation:location]
 
 
 ### Geocentric Distance
@@ -55,7 +55,7 @@ You can get geocentric distance at specific date using:
 
 e.g.
 
-    [[[CMSun new] geocentricDistanceAtDate:date]
+    [[CMSun new] geocentricDistanceAtDate:date]
 
 ## ARC
 CelestialUtil needs ARC.
