@@ -212,7 +212,7 @@ static double E(double T){
 
 -(double)apparentElevationAtDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate{
     double elevation = [self elevationAtDate:date inLocation:coordinate];
-    return elevation + [self atmosphicReflactionForElevation:elevation] - [self equatorialHorizontalParallaxAtDate:date inLocation:coordinate];
+    return elevation + [self atmosphicReflactionForElevation:elevation] - [self equatorialHorizontalParallaxAtDate:date];
 }
 
 -(double)equatorialHorizontalParallaxAtDate:(NSDate *)date{
