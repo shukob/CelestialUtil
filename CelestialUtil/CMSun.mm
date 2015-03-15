@@ -155,7 +155,7 @@ static double beta(double T){
 
 -(double)equatorialHorizontalParallax:(double)T{
     double au = [self geocentricDistance:T];
-    return D2R(0.0024428 / au);
+    return D2R(0.0024428) / au;
 }
 
 @end
